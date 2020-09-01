@@ -17,7 +17,6 @@ namespace WpfCompany.ViewModels
         public MainWindowViewModel(MainWindow mainOpen)
         {
             main = mainOpen;
-
         }
 
         #endregion

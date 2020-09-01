@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using WpfBetweenUs.Model;
 using WpfBetweenUs.Views;
 
 namespace WpfBetweenUs.ViewModels
@@ -19,13 +20,37 @@ namespace WpfBetweenUs.ViewModels
         public RegisterViewModel(Register registerOpen)
         {
             register = registerOpen;
+            account = new tblAccount();
+            genderList = new List<string> { "M", "Z" };
         }
 
         #endregion
 
         #region Properties
 
+        private tblAccount account;
 
+        public tblAccount Account
+        {
+            get { return account; }
+            set
+            {
+                account = value;
+                OnPropertyChanged("Account");
+            }
+        }
+
+        private List<string> genderList;
+
+        public List<string> GenderList
+        {
+            get { return genderList; }
+            set
+            {
+                genderList = value;
+                OnPropertyChanged("GenderList");
+            }
+        }
 
         #endregion
 
@@ -50,16 +75,34 @@ namespace WpfBetweenUs.ViewModels
         {
             try
             {
+                service.AddAccount(Account);
+                MessageBox.Show("Registration completed.");
+                register.Close();
             }
-            catch (Exception ex)
+            catch 
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Username already exists, please choose another username");
             }
         }
 
         private bool CanSaveExecute()
         {
-            return true;
+            if (Account.FirstName != null && Account.LastName != null && Account.Gender != null
+                && Account.UserName != null && Account.Pass != null)
+            {
+                if (Account.UserName.Length >= 6 && Account.Pass.Length >= 6 && Account.FirstName.Length >= 1 && Account.LastName.Length >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private ICommand close;
