@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfBetweenUs;
 using WpfBetweenUs.ViewModels;
+using WpfBetweenUs.Views;
 
 namespace WpfCompany.ViewModels
 {
@@ -108,8 +109,8 @@ namespace WpfCompany.ViewModels
         {
             try
             {
-                //Register register = new Register();
-                //register.ShowDialog();
+                Register register = new Register();
+                register.ShowDialog();
             }
             catch (Exception ex)
             {
