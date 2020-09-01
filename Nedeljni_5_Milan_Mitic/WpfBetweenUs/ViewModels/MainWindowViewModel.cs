@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using WpfBetweenUs;
+using WpfBetweenUs.Model;
 using WpfBetweenUs.ViewModels;
 using WpfBetweenUs.Views;
 
@@ -76,7 +77,17 @@ namespace WpfCompany.ViewModels
         {
             try
             {
-               
+                tblAccount account;
+                if (service.IsUser(UserName, Password, out account))
+                {
+                    User user = new User(account);
+                    user.ShowDialog();
+                    main.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Username or password incorrect");
+                }
             }
             catch (Exception ex)
             {
