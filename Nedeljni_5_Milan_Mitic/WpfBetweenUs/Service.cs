@@ -53,6 +53,22 @@ namespace WpfBetweenUs
                 return false;
             }
         }
+
+        public void Post(tblAccount account, string text)
+        {
+            using (BetweenUsEntities context = new BetweenUsEntities())
+            {
+                tblPost post = new tblPost
+                {
+                    AccountID = account.AccountID,
+                    Content = text,
+                    PostTime = DateTime.Now,
+                    LikesNumber = 0
+                };
+                context.tblPosts.Add(post);
+                context.SaveChanges();
+            }
+        }
     }
 }
 

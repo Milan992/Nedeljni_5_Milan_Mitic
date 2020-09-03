@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfBetweenUs.Views"
         mc:Ignorable="d"
-        Title="User" Height="450" Width="800">
+        Title="BetweenUs" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock HorizontalAlignment="Left"
+                   Margin="10,10,0,0" 
+                   TextWrapping="Wrap" 
+                   Text="{Binding Account.FirstName, UpdateSourceTrigger=PropertyChanged}" 
+                   VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left"
+                   Margin="10,25,0,0" 
+                   TextWrapping="Wrap" 
+                   Text="{Binding Account.LastName, UpdateSourceTrigger=PropertyChanged}" 
+                   VerticalAlignment="Top"/>
+        <Label Margin="10,50,0,0" Content="Type something. . ."/>
+        <TextBox HorizontalAlignment="Left"
+                 Margin="10,72,0,0" 
+                 TextWrapping="Wrap"                 
+                 VerticalAlignment="Top" 
+                 Width="300"
+                 Height="100"
+                 Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Content="Post" 
+                RenderTransformOrigin="4.173,1.4"
+                Margin="315,72,402,321"
+                Command="{Binding Post, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>
