@@ -26,6 +26,7 @@ namespace WpfBetweenUs.ViewModels
         {
             user = userOpen;
             account = accountToView;
+            posts = service.GetAllPosts();
         }
 
         #endregion
@@ -67,32 +68,45 @@ namespace WpfBetweenUs.ViewModels
                 OnPropertyChanged("Posts");
             }
         }
-        
+
+        private vwPost post;
+
+        public vwPost Post
+        {
+            get { return post; }
+            set
+            {
+                post = value;
+                OnPropertyChanged("Post");
+            }
+        }
+
         #endregion
 
         #region Commands
 
-        private ICommand post;
+        private ICommand addPost;
 
-        public ICommand Post
+        public ICommand AddPost
         {
             get
             {
-                if (post == null)
+                if (addPost == null)
                 {
-                    post = new RelayCommand(param => PostExecute(), param => CanPostExecute());
+                    addPost = new RelayCommand(param => AddPostExecute(), param => CanAddPostExecute());
                 }
 
-                return post;
+                return addPost;
             }
         }
 
-        private void PostExecute()
+        private void AddPostExecute()
         {
             try
             {
                 service.Post(Account, Text);
                 Text = "";
+                Posts = service.GetAllPosts();
                 MessageBox.Show("Thanx for sharing.");
             }
             catch (Exception ex)
@@ -101,7 +115,7 @@ namespace WpfBetweenUs.ViewModels
             }
         }
 
-        private bool CanPostExecute()
+        private bool CanAddPostExecute()
         {
             if (!string.IsNullOrWhiteSpace(Text))
             {
@@ -120,6 +134,39 @@ namespace WpfBetweenUs.ViewModels
             }
         }
 
+        private ICommand likePost;
+
+        public ICommand LikePost
+        {
+            get
+            {
+                if (likePost == null)
+                {
+                    likePost = new RelayCommand(param => LikePostExecute(), param => CanLikePostExecute());
+                }
+
+                return likePost;
+            }
+        }
+
+        private void LikePostExecute()
+        {
+            try
+            {
+                service.Like(Post);
+                Posts = service.GetAllPosts();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private bool CanLikePostExecute()
+        {
+            // TODO provera dal su prijatelji 
+            return true;
+        }
         #endregion
 
     }

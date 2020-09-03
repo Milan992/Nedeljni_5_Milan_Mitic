@@ -54,6 +54,11 @@ namespace WpfBetweenUs
             }
         }
 
+        /// <summary>
+        /// Adds new post to tblPost in database.
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="text"></param>
         public void Post(tblAccount account, string text)
         {
             using (BetweenUsEntities context = new BetweenUsEntities())
@@ -66,6 +71,35 @@ namespace WpfBetweenUs
                     LikesNumber = 0
                 };
                 context.tblPosts.Add(post);
+                context.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Gets all posts from view vwPost in database.
+        /// </summary>
+        /// <returns></returns>
+        public List<vwPost> GetAllPosts()
+        {
+            try
+            {
+                using (BetweenUsEntities context = new BetweenUsEntities())
+                {
+                    return (from l in context.vwPosts select l).ToList();
+                }
+            }
+            catch 
+            {
+                return null;
+            }
+        }
+
+        public void Like(vwPost post)
+        {
+            using (BetweenUsEntities context = new BetweenUsEntities())
+            {
+                vwPost postToLike = (from p in context.vwPosts where p.PostID == post.PostID select p).First();
+                postToLike.LikesNumber++;
                 context.SaveChanges();
             }
         }
