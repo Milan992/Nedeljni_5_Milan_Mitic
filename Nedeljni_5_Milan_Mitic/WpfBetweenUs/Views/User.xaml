@@ -43,7 +43,11 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Command="{Binding LikePost, UpdateSourceTrigger=PropertyChanged}">Like</Button>
+                            <Button 
+                                Content="Like"
+                                Command="{Binding Path=DataContext.LikePost,       
+                                RelativeSource= {RelativeSource FindAncestor,
+                                AncestorType={x:Type DataGrid}}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

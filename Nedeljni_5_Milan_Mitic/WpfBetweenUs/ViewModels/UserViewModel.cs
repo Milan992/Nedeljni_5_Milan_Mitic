@@ -167,6 +167,7 @@ namespace WpfBetweenUs.ViewModels
             // TODO provera dal su prijatelji 
             return true;
         }
+
         #endregion
 
     }

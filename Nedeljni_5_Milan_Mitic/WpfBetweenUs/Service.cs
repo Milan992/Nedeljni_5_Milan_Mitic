@@ -98,7 +98,7 @@ namespace WpfBetweenUs
         {
             using (BetweenUsEntities context = new BetweenUsEntities())
             {
-                vwPost postToLike = (from p in context.vwPosts where p.PostID == post.PostID select p).First();
+                tblPost postToLike = (from p in context.tblPosts where p.PostID == post.PostID select p).First();
                 postToLike.LikesNumber++;
                 context.SaveChanges();
             }
