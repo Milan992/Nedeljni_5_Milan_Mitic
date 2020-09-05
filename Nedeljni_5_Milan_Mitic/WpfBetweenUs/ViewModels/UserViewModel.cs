@@ -153,7 +153,7 @@ namespace WpfBetweenUs.ViewModels
         {
             try
             {
-                service.Like(Post);
+                service.Like(Post, Account);
                 Posts = service.GetAllPosts();
             }
             catch (Exception ex)
@@ -164,7 +164,7 @@ namespace WpfBetweenUs.ViewModels
 
         private bool CanLikePostExecute()
         {
-            // TODO provera dal su prijatelji 
+            // TODO check if friends
             return true;
         }
 

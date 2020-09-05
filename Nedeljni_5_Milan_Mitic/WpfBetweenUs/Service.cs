@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfBetweenUs.Model;
 
 namespace WpfBetweenUs
@@ -94,13 +95,28 @@ namespace WpfBetweenUs
             }
         }
 
-        public void Like(vwPost post)
+        public void Like(vwPost post, tblAccount account)
         {
             using (BetweenUsEntities context = new BetweenUsEntities())
             {
-                tblPost postToLike = (from p in context.tblPosts where p.PostID == post.PostID select p).First();
-                postToLike.LikesNumber++;
-                context.SaveChanges();
+                try
+                {
+                    tblLike like = (from l in context.tblLikes where l.PostID == post.PostID && l.AccountID == account.AccountID select l).First();
+                    MessageBox.Show("You already like this post");
+                }
+                catch
+                {
+                    tblLike like = new tblLike
+                    {
+                        PostID = post.PostID,
+                        AccountID = account.AccountID
+                    };
+                    context.tblLikes.Add(like);
+
+                    tblPost postToLike = (from p in context.tblPosts where p.PostID == post.PostID select p).First();
+                    postToLike.LikesNumber++;
+                    context.SaveChanges();
+                }
             }
         }
     }
