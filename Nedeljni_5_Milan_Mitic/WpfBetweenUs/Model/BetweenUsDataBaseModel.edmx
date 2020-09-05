@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BetweenUsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAccount">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblLike">
+          <Key>
+            <PropertyRef Name="LikeID" />
+          </Key>
+          <Property Name="LikeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPost">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostTime" Type="datetime" />
+          <Property Name="LikesNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="tblRequest">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderAccountID" Type="int" Nullable="false" />
+          <Property Name="ReciverAccountID" Type="int" Nullable="false" />
+          <Property Name="Accepted" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BetweenUs.dbo.vwPost' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwPost">
+          <Key>
+            <PropertyRef Name="PostID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="Expr1" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="Content" />
+          </Key>
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="AccountID" Type="int" Nullable="false" />
+          <Property Name="Expr1" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostTime" Type="datetime" />
+          <Property Name="LikesNumber" Type="int" />
+        </EntityType>
+        <Association Name="FK__tblLike__Account__53A266AC">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblLike" Type="Self.tblLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblLike">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblLike__PostID__52AE4273">
+          <End Role="tblPost" Type="Self.tblPost" Multiplicity="1" />
+          <End Role="tblLike" Type="Self.tblLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPost">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="tblLike">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPost__Account__4FD1D5C8">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblPost" Type="Self.tblPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblPost">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblReques__Reciv__4CF5691D">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblRequest" Type="Self.tblRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblRequest">
+              <PropertyRef Name="ReciverAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblReques__Sende__4C0144E4">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblRequest" Type="Self.tblRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblRequest">
+              <PropertyRef Name="SenderAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BetweenUsModelStoreContainer">
+          <EntitySet Name="tblAccount" EntityType="Self.tblAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblLike" EntityType="Self.tblLike" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPost" EntityType="Self.tblPost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRequest" EntityType="Self.tblRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwPost" EntityType="Self.vwPost" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwPost].[PostID] AS [PostID], 
+    [vwPost].[AccountID] AS [AccountID], 
+    [vwPost].[Expr1] AS [Expr1], 
+    [vwPost].[UserName] AS [UserName], 
+    [vwPost].[Content] AS [Content], 
+    [vwPost].[PostTime] AS [PostTime], 
+    [vwPost].[LikesNumber] AS [LikesNumber]
+    FROM [dbo].[vwPost] AS [vwPost]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblLike__Account__53A266AC" Association="Self.FK__tblLike__Account__53A266AC">
+            <End Role="tblAccount" EntitySet="tblAccount" />
+            <End Role="tblLike" EntitySet="tblLike" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblLike__PostID__52AE4273" Association="Self.FK__tblLike__PostID__52AE4273">
+            <End Role="tblPost" EntitySet="tblPost" />
+            <End Role="tblLike" EntitySet="tblLike" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPost__Account__4FD1D5C8" Association="Self.FK__tblPost__Account__4FD1D5C8">
+            <End Role="tblAccount" EntitySet="tblAccount" />
+            <End Role="tblPost" EntitySet="tblPost" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblReques__Reciv__4CF5691D" Association="Self.FK__tblReques__Reciv__4CF5691D">
+            <End Role="tblAccount" EntitySet="tblAccount" />
+            <End Role="tblRequest" EntitySet="tblRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblReques__Sende__4C0144E4" Association="Self.FK__tblReques__Sende__4C0144E4">
+            <End Role="tblAccount" EntitySet="tblAccount" />
+            <End Role="tblRequest" EntitySet="tblRequest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BetweenUsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAccount">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tblLikes" Relationship="Self.FK__tblLike__Account__53A266AC" FromRole="tblAccount" ToRole="tblLike" />
+          <NavigationProperty Name="tblPosts" Relationship="Self.FK__tblPost__Account__4FD1D5C8" FromRole="tblAccount" ToRole="tblPost" />
+          <NavigationProperty Name="tblRequests" Relationship="Self.FK__tblReques__Reciv__4CF5691D" FromRole="tblAccount" ToRole="tblRequest" />
+          <NavigationProperty Name="tblRequests1" Relationship="Self.FK__tblReques__Sende__4C0144E4" FromRole="tblAccount" ToRole="tblRequest" />
+        </EntityType>
+        <EntityType Name="tblLike">
+          <Key>
+            <PropertyRef Name="LikeID" />
+          </Key>
+          <Property Name="LikeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK__tblLike__Account__53A266AC" FromRole="tblLike" ToRole="tblAccount" />
+          <NavigationProperty Name="tblPost" Relationship="Self.FK__tblLike__PostID__52AE4273" FromRole="tblLike" ToRole="tblPost" />
+        </EntityType>
+        <EntityType Name="tblPost">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostTime" Type="DateTime" Precision="3" />
+          <Property Name="LikesNumber" Type="Int32" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK__tblPost__Account__4FD1D5C8" FromRole="tblPost" ToRole="tblAccount" />
+          <NavigationProperty Name="tblLikes" Relationship="Self.FK__tblLike__PostID__52AE4273" FromRole="tblPost" ToRole="tblLike" />
+        </EntityType>
+        <EntityType Name="tblRequest">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderAccountID" Type="Int32" Nullable="false" />
+          <Property Name="ReciverAccountID" Type="Int32" Nullable="false" />
+          <Property Name="Accepted" Type="Boolean" />
+          <NavigationProperty Name="tblAccount" Relationship="Self.FK__tblReques__Reciv__4CF5691D" FromRole="tblRequest" ToRole="tblAccount" />
+          <NavigationProperty Name="tblAccount1" Relationship="Self.FK__tblReques__Sende__4C0144E4" FromRole="tblRequest" ToRole="tblAccount" />
+        </EntityType>
+        <EntityType Name="vwPost">
+          <Key>
+            <PropertyRef Name="PostID" />
+            <PropertyRef Name="AccountID" />
+            <PropertyRef Name="Expr1" />
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="Content" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostTime" Type="DateTime" Precision="3" />
+          <Property Name="LikesNumber" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__tblLike__Account__53A266AC">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblLike" Type="Self.tblLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblLike">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblPost__Account__4FD1D5C8">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblPost" Type="Self.tblPost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblPost">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblReques__Reciv__4CF5691D">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblRequest" Type="Self.tblRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblRequest">
+              <PropertyRef Name="ReciverAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblReques__Sende__4C0144E4">
+          <End Role="tblAccount" Type="Self.tblAccount" Multiplicity="1" />
+          <End Role="tblRequest" Type="Self.tblRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAccount">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="tblRequest">
+              <PropertyRef Name="SenderAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblLike__PostID__52AE4273">
+          <End Role="tblPost" Type="Self.tblPost" Multiplicity="1" />
+          <End Role="tblLike" Type="Self.tblLike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPost">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="tblLike">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BetweenUsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAccounts" EntityType="Self.tblAccount" />
+          <EntitySet Name="tblLikes" EntityType="Self.tblLike" />
+          <EntitySet Name="tblPosts" EntityType="Self.tblPost" />
+          <EntitySet Name="tblRequests" EntityType="Self.tblRequest" />
+          <EntitySet Name="vwPosts" EntityType="Self.vwPost" />
+          <AssociationSet Name="FK__tblLike__Account__53A266AC" Association="Self.FK__tblLike__Account__53A266AC">
+            <End Role="tblAccount" EntitySet="tblAccounts" />
+            <End Role="tblLike" EntitySet="tblLikes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblPost__Account__4FD1D5C8" Association="Self.FK__tblPost__Account__4FD1D5C8">
+            <End Role="tblAccount" EntitySet="tblAccounts" />
+            <End Role="tblPost" EntitySet="tblPosts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblReques__Reciv__4CF5691D" Association="Self.FK__tblReques__Reciv__4CF5691D">
+            <End Role="tblAccount" EntitySet="tblAccounts" />
+            <End Role="tblRequest" EntitySet="tblRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblReques__Sende__4C0144E4" Association="Self.FK__tblReques__Sende__4C0144E4">
+            <End Role="tblAccount" EntitySet="tblAccounts" />
+            <End Role="tblRequest" EntitySet="tblRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblLike__PostID__52AE4273" Association="Self.FK__tblLike__PostID__52AE4273">
+            <End Role="tblPost" EntitySet="tblPosts" />
+            <End Role="tblLike" EntitySet="tblLikes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BetweenUsModelStoreContainer" CdmEntityContainer="BetweenUsEntities">
+          <EntitySetMapping Name="tblAccounts">
+            <EntityTypeMapping TypeName="BetweenUsModel.tblAccount">
+              <MappingFragment StoreEntitySet="tblAccount">
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblLikes">
+            <EntityTypeMapping TypeName="BetweenUsModel.tblLike">
+              <MappingFragment StoreEntitySet="tblLike">
+                <ScalarProperty Name="LikeID" ColumnName="LikeID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPosts">
+            <EntityTypeMapping TypeName="BetweenUsModel.tblPost">
+              <MappingFragment StoreEntitySet="tblPost">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="PostTime" ColumnName="PostTime" />
+                <ScalarProperty Name="LikesNumber" ColumnName="LikesNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRequests">
+            <EntityTypeMapping TypeName="BetweenUsModel.tblRequest">
+              <MappingFragment StoreEntitySet="tblRequest">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="SenderAccountID" ColumnName="SenderAccountID" />
+                <ScalarProperty Name="ReciverAccountID" ColumnName="ReciverAccountID" />
+                <ScalarProperty Name="Accepted" ColumnName="Accepted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwPosts">
+            <EntityTypeMapping TypeName="BetweenUsModel.vwPost">
+              <MappingFragment StoreEntitySet="vwPost">
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="PostTime" ColumnName="PostTime" />
+                <ScalarProperty Name="LikesNumber" ColumnName="LikesNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,85 @@
+﻿<Window x:Class="WpfBetweenUs.Views.Register"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfBetweenUs.Views"
+        mc:Ignorable="d"
+         Title="Register"
+        Height="300"
+        Width="470">
+    <Grid>
+        <Label Content="Name:"
+               HorizontalAlignment="Left"
+               Margin="40,10,0,0"
+               VerticalAlignment="Top"
+               RenderTransformOrigin="-1.579,0.192" />
+        <Label Content="Last name:"
+               HorizontalAlignment="Left"
+               Margin="40,40,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Gender:"
+               HorizontalAlignment="Left"
+               Margin="40,70,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Username:"
+               HorizontalAlignment="Left"
+               Margin="40,100,0,0"
+               VerticalAlignment="Top" />
+        <Label Content="Password:"
+               HorizontalAlignment="Left"
+               Margin="40,130,0,0"
+               VerticalAlignment="Top" />
+        
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="180,13,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Account.FirstName, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="180,43,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Account.LastName, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <ComboBox HorizontalAlignment="Left"
+                  ItemsSource="{Binding GenderList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding Account.Gender, UpdateSourceTrigger=PropertyChanged}"
+                  Margin="180,73,0,0"
+                  VerticalAlignment="Top"
+                  Width="120" />
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="180,103,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Account.UserName, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <Label Margin="300,103,0,0">at least 6 characters long</Label>
+        <TextBox HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="180,133,0,0"
+                 TextWrapping="Wrap"
+                 Text="{Binding Account.Pass, UpdateSourceTrigger=PropertyChanged}"
+                 VerticalAlignment="Top"
+                 Width="120" />
+        <Label Margin="300,133,0,0">at least 6 characters long</Label>
+        
+        <Button Content="Save"
+                Command="{Binding Save, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Margin="40,200,0,0"
+                VerticalAlignment="Top"
+                Width="75"
+                RenderTransformOrigin="0.32,2.25" />
+        <Button Content="Close"
+                Command="{Binding Close, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                Margin="120,200,0,0"
+                VerticalAlignment="Top"
+                Width="75" />
+    </Grid>
+</Window>

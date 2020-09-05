@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c1f5be263afc486cb6773ce81309423b" Name="Diagram1">
+        <EntityTypeShape EntityType="BetweenUsModel.tblAccount" Width="1.5" PointX="0.625" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BetweenUsModel.tblLike" Width="1.5" PointX="3.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="BetweenUsModel.tblPost" Width="1.5" PointX="6" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BetweenUsModel.tblRequest" Width="1.5" PointX="3.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BetweenUsModel.vwPost" Width="1.5" PointX="8.5" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="BetweenUsModel.FK__tblLike__Account__53A266AC" ManuallyRouted="false" />
+        <AssociationConnector Association="BetweenUsModel.FK__tblPost__Account__4FD1D5C8" ManuallyRouted="false" />
+        <AssociationConnector Association="BetweenUsModel.FK__tblReques__Reciv__4CF5691D" ManuallyRouted="false" />
+        <AssociationConnector Association="BetweenUsModel.FK__tblReques__Sende__4C0144E4" ManuallyRouted="false" />
+        <AssociationConnector Association="BetweenUsModel.FK__tblLike__PostID__52AE4273" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
